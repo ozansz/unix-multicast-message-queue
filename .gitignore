@@ -1,0 +1,7 @@
+.vscode/
+DS_Store/
+test
+agent
+client
+server
+test*.*
