@@ -55,27 +55,9 @@ errcode_t Server::Listen() {
 }
 
 errcode_t Server::AllocateSharedMemory() {
-    // __error_trace_glob
-  
-    // // shmget returns an identifier in shmid
-    // int shmid = shmget(key,1024,0666|IPC_CREAT);
-  
-    // // shmat to attach to shared memory
-    // char *str = (char*) shmat(shmid,(void*)0,0);
-  
-    // cout<<"Write Data : ";
-    // gets(str);
-  
-    // printf("Data written in memory: %s\n",str);
-      
-    // //detach from shared memory 
-    // shmdt(str);
-    return EC_OK;
-}
-
-errcode_t Server::PreserveSynchronization() {
-    return EC_OK;
     // TODO
+    
+    return EC_OK;
 }
 
 errcode_t Server::Run() {

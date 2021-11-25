@@ -20,6 +20,7 @@
 #include "errors.h"
 #include "error_trace.h"
 #include "shared_mem.h"
+#include "rwlock.h"
 
 extern std::vector<TraceNode> __error_trace_glob;
 

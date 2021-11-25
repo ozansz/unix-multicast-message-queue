@@ -1,7 +1,7 @@
 CXX=g++
-CFLAGS=-lpthread -O3
+CFLAGS=-lpthread -g
 
-all: server
+all: test
 
-server:
-	$(CXX) $(CFLAGS) -o server *.cpp
+test:
+	$(CXX) $(CFLAGS) -o wrm agent.cpp client.cpp error_trace.cpp errors.cpp message_chain.cpp message_queue.cpp rwlock.cpp server.cpp shared_mem.cpp test_writer.cpp

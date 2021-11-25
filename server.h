@@ -9,7 +9,6 @@ public:
     errcode_t Bind();
     errcode_t Listen();
     errcode_t AllocateSharedMemory();
-    errcode_t PreserveSynchronization();
     errcode_t Run();
 
 private:

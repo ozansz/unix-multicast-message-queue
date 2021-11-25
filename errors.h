@@ -27,6 +27,13 @@ typedef enum {
     EC_SHMGET,
     EC_SHM_UNINITIALIZED,
     EC_SHMAT,
+    EC_SEM_OPEN,
+    EC_SEM_CLOSE,
+    EC_SEM_UNLINK,
+    EC_MUNMAP,
+    EC_SHMDT,
+    EC_CREAT,
+    EC_OPEN,
 } errcode_t;
 
 const char* get_err_desc(errcode_t code);

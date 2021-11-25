@@ -5,3 +5,7 @@ agent
 client
 server
 test*.*
+wrm
+__*
+*.dSYM/
+unused/

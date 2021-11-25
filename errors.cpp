@@ -24,6 +24,13 @@ const char* err_codes_map[] = {
     "shmget() has failed",
     "Shared memory is uninitialized",
     "shmat() has failed",
+    "sem_open() has failed",
+    "sem_close() has failed",
+    "sem_unlink() has failed",
+    "munmap() has failed",
+    "shmdt() has failed",
+    "creat() has failed",
+    "open() has failed",
 };
 
 const char* get_err_desc(errcode_t code) {

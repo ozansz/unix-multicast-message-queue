@@ -3,7 +3,7 @@
 
 #include "common.h"
 
-const size_t shared_mem_item_size = MESSAGE_LENGTH_BYTES;
-const size_t shared_mem_total_size = TOTAL_ACTIVE_MESSAGES * shared_mem_item_size;
+errcode_t get_or_create_shared_memory(key_t shmkey, size_t size, int prot, void **ptr);
+errcode_t creat_and_ftok(const char* path, int proj_id, key_t *key);
 
 #endif
