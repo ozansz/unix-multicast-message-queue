@@ -2,6 +2,7 @@
 #define __SERVER_H
 
 #include "common.h"
+#include "message_queue.h"
 
 class Server {
 public:
@@ -14,6 +15,7 @@ public:
 private:
     int sock_fd;
     std::string sock_path;
+    MessageQueue *queue;
 };
 
 #endif

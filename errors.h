@@ -34,6 +34,8 @@ typedef enum {
     EC_SHMDT,
     EC_CREAT,
     EC_OPEN,
+    EC_TRY_DEC_ZERO_REF,
+    EC_SHARED_INDEX_SYNC,
 } errcode_t;
 
 const char* get_err_desc(errcode_t code);

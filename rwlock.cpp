@@ -1,39 +1,50 @@
 #include "rwlock.h"
 
-errcode_t RWLock::Init(const char* _tag) {
-    this->tag = _tag;
+std::string RWCreds::Dump() {
+    std::ostringstream stream;
 
-    std::cout << "r1\n";
+    stream << "\nlock_sem_file: " << this->lock_sem_file;
+    stream << "\nwrlock_sem_file: " << this->wrlock_sem_file;
+    stream << "\nreaders_shmkey: " << this->readers_shmkey;
+
+    return stream.str();
+}
+
+errcode_t RWLock::Init(const char* _tag) {
+    __initialized_with_creds = false;
+
+    this->tag = _tag;
 
     lock_sem_file = LOCK_SEM_PREFIX + tag;
     wrlock_sem_file = WRLOCK_SEM_PREFIX + tag;
-std::cout << "r2\n";
     lock = sem_open(lock_sem_file.c_str(), O_CREAT, 0644, 1);
-std::cout << "r3\n";
+
     if (lock == SEM_FAILED)
         TRACE_WITH_ERRNO_AND_RETURN(EC_SEM_OPEN)
-std::cout << "r4\n";
+
     write_lock = sem_open(wrlock_sem_file.c_str(), O_CREAT, 0644, 1);
-std::cout << "r5\n";
+
     if (write_lock == SEM_FAILED)
         TRACE_WITH_ERRNO_AND_RETURN(EC_SEM_OPEN)
-std::cout << "r6\n";
+
     if (creat_and_ftok((READERS_SHM_FILE_PREFIX + tag).c_str(), FTOK_PROJ_ID, &readers_shmkey) > 0)
         PANIC_WITH_CTX
-std::cout << "r7\n";
+
     void *ptr;
-std::cout << "r8\n";
+
     if (get_or_create_shared_memory(readers_shmkey, sizeof(int), IPC_CREAT | 0666, &ptr) > 0)
         PANIC_WITH_CTX
-std::cout << "r9\n";
+
     readers = (int*) ptr;
-    std::cout << "r10\n";
+    
     *readers = 0;
-std::cout << "r11\n";
+
     return EC_OK;
 }
 
 errcode_t RWLock::Init(const char* _tag, RWCreds *creds) {
+    __initialized_with_creds = true;
+
     this->tag = _tag;
 
     this->lock_sem_file = creds->lock_sem_file;
@@ -71,11 +82,13 @@ errcode_t RWLock::Clear() {
     if (sem_close(write_lock) < 0)
         TRACE_WITH_ERRNO_AND_RETURN(EC_SEM_CLOSE)
 
-    if (sem_unlink(lock_sem_file.c_str()) < 0)
-        TRACE_WITH_ERRNO_AND_RETURN(EC_SEM_UNLINK)
+    if (!__initialized_with_creds) {
+        if (sem_unlink(lock_sem_file.c_str()) < 0)
+            TRACE_WITH_ERRNO_AND_RETURN(EC_SEM_UNLINK)
 
-    if (sem_unlink(wrlock_sem_file.c_str()) < 0)
-        TRACE_WITH_ERRNO_AND_RETURN(EC_SEM_UNLINK)
+        if (sem_unlink(wrlock_sem_file.c_str()) < 0)
+            TRACE_WITH_ERRNO_AND_RETURN(EC_SEM_UNLINK)
+    }
 
     // if (munmap(readers, sizeof(int)) < 0)
     //     TRACE_WITH_ERRNO_AND_RETURN(EC_MUNMAP)

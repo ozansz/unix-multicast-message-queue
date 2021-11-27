@@ -23,5 +23,7 @@
 #include "rwlock.h"
 
 extern std::vector<TraceNode> __error_trace_glob;
+extern uint64_t ___times__get_or_create_shared_memory_called;
+// extern bool ___glob_message_queue_init;
 
 #endif

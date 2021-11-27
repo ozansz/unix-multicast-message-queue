@@ -31,6 +31,8 @@ const char* err_codes_map[] = {
     "shmdt() has failed",
     "creat() has failed",
     "open() has failed",
+    "Tried do decrement refs[index] which was already zero",
+    "Shared data index synchronization error",
 };
 
 const char* get_err_desc(errcode_t code) {

@@ -1,6 +1,8 @@
 #include "shared_mem.h"
 #include "message_chain.h"
 
+uint64_t ___times__get_or_create_shared_memory_called = 0;
+
 errcode_t get_or_create_shared_memory(key_t shmkey, size_t size, int prot, void **ptr) {
     key_t shmid = shmget(shmkey, size, prot);
 
@@ -9,9 +11,10 @@ errcode_t get_or_create_shared_memory(key_t shmkey, size_t size, int prot, void 
 
     *ptr = shmat(shmid, NULL, 0);
 
-    if (*ptr == NULL)
+    if ((*ptr == NULL) || (*ptr == ((void*)(-1))))
         TRACE_WITH_ERRNO_AND_RETURN(EC_SHMAT)
 
+    ___times__get_or_create_shared_memory_called++;
     return EC_OK;
 }
 

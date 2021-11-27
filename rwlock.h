@@ -22,6 +22,8 @@ typedef struct _rwcreds {
     const char  *lock_sem_file;
     const char  *wrlock_sem_file;
     key_t       readers_shmkey;
+
+    std::string Dump();
 } RWCreds;
 
 typedef struct _rwlock {
@@ -38,6 +40,8 @@ typedef struct _rwlock {
     RWCreds* GetCreds();
 
 private:
+    bool __initialized_with_creds;
+
     std::string tag;
     std::string lock_sem_file;
     std::string wrlock_sem_file;

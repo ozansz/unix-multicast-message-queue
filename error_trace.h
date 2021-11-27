@@ -8,6 +8,8 @@
 #include <stdexcept>
 #include "errors.h"
 
+extern uint64_t ___times__get_or_create_shared_memory_called;
+
 #define ENABLE_ERROR_TRACING    1
 #define TRACE_APPEND(code) { if (ENABLE_ERROR_TRACING) _trace_append((errcode_t)(code), __func__, __FILE__, __LINE__); }
 #define TRACE_APPEND_WITH_CTX(code, ctx) { if (ENABLE_ERROR_TRACING) _trace_append_with_ctx((errcode_t)(code), (ctx), __func__, __FILE__, __LINE__); }

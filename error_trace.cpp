@@ -32,6 +32,9 @@ std::string TraceNode::Dump() {
 }
 
 void panic_with_trace(bool throw_exc_on_return) {
+    // // DEBUG :: REMOVE THIS!
+    // std::cout << ___times__get_or_create_shared_memory_called << "\n";
+
     std::cout << "\n=========[ ERROR TRACE ]=========\n";
 
     for (std::vector<TraceNode*>::iterator tr = __error_trace_glob.begin(); tr < __error_trace_glob.end(); tr++) {
